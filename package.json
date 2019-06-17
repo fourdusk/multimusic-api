@@ -1,0 +1,24 @@
+{
+  "name": "multimusic-api",
+  "version": "1.0.0",
+  "description": "multimusic-api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "multimusic-api"
+  ],
+  "author": "fourdusk",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "cheerio": "^1.0.0-rc.3",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-cache-lite": "^3.8.8",
+    "koa-router": "^7.4.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}
