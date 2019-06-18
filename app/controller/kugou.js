@@ -187,24 +187,31 @@ class KugouController {
   }
 
   static async songdetail(ctx) {
-    let data = await rp({
-      uri: 'http://www.kugou.com/yy/index.php',
+    let song = await rp({
+      uri: 'https://m3ws.kugou.com/api/v1/song/get_song_info',
       qs: {
-        r: 'play/getdata',
+        cmd: 'playInfo',
         hash: ctx.params.ids
-      },
-      headers: {
-        cookie: 'kg_mid=1'
       }
-    }).then(value => {
-      let val = JSON.parse(value)
-      let id = val.data.hash
-      let name = val.data.song_name
-      let artist = val.data.author_name.split('、')
-      let cover = val.data.img
-      let playurl = val.data.play_url
-      let lyric = val.data.lyrics || ''
+    })
 
+    let lyric = await rp({
+      uri: 'https://m3ws.kugou.com/app/i/krc.php',
+      qs: {
+        cmd: 100,
+        timelength: 1,
+        hash: ctx.params.ids
+      }
+    })
+
+    let data = await Promise.all([song, lyric]).then(value => {
+      let song = JSON.parse(value[0])
+      let lyric = value[1]
+      let id = song.hash
+      let name = song.songName
+      let artist = song.singerName
+      let cover = song.imgUrl.replace('{size}', 400)
+      let playurl = song.url
       return {
         song: {
           id,
