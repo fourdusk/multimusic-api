@@ -209,9 +209,12 @@ class KugouController {
       let lyric = value[1]
       let id = song.hash
       let name = song.songName
-      let artist = song.singerName
       let cover = song.imgUrl.replace('{size}', 400)
       let playurl = song.url
+      let artist = []
+      for (let v of song.choricSinger.split('、')) {
+        artist.push(v)
+      }
       return {
         song: {
           id,
